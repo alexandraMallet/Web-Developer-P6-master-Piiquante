@@ -8,8 +8,8 @@ mongoose.connect("mongodb+srv://AlexandraMallet:piiquante@cluster0.zq66r16.mongo
         useNewUrlParser : true,
         useUnifiedTopology : true
     })
-    .then(() => console.log("Connexion à MongoDB réussie !"))
-    .catch(() => console.log("Connexion à MongoDB échouée."));
+    .then(() => console.log("Application connectée à MongoDB."))
+    .catch(() => console.log("Impossible de se connecter à MongoDB."));
 
 
 module.exports = app;
