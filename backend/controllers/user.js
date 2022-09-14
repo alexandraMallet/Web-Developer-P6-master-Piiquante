@@ -2,6 +2,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+//TODO : vérifier email valide
+//TODO : vérifier email pas déjà présent dans la BDD
+//TODO : vérifier password minimum 8 caractères
+
+
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
