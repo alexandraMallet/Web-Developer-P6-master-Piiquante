@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
+const dotenv = require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://AlexandraMallet:piiquante@cluster0.zq66r16.mongodb.net/?retryWrites=true&w=majority",
+mongoose.connect(process.env.URL_DATABASE,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -25,4 +26,4 @@ app.use((req, res, next) => {
 
 app.use("/api/auth", userRoutes);
 
-module.exports = app;
+module.exports = app; 
