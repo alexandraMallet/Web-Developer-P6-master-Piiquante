@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const dotenv = require("dotenv").config();
 
+//TODO : helmet
+//TODO :  rateLimit
+
 const app = express();
 
 app.use(express.json());
