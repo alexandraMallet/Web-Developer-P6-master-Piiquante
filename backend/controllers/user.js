@@ -19,7 +19,7 @@ exports.signup = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
-                return res.status(400).json({ message: "impossible de créer un compte avec cet email" });
+                return res.status(409).json({ message: "impossible de créer un compte avec cet email" });
             }
             bcrypt.hash(req.body.password, 10)
                 .then(hash => {
@@ -38,6 +38,12 @@ exports.signup = (req, res, next) => {
 
 
 exports.login = (req, res, next) => {
+    if (!req.body.email.match(validEmail)) {
+        return res.status(400).json({ message: "email incorrect" });
+    }
+    if (!req.body.password.match(validPassword)) {
+        return res.status(400).json({ message: "le mot de passe doit contenir au moins 8 caractères" });
+    }
     User.findOne({ email: req.body.email })
         .then(user => {
             if (!user) {
