@@ -2,10 +2,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const validEmail = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$/;
-const validPassword = /(?=.{8,})/;
+const validPassword = /.{8,}/;
+//[.\S]{8,}
 
 
-//TODO : vérifier password pas d'espace
+//TODO : vérifier password pas d'espace en plus de 8 caractères minimum
 
 
 exports.signup = (req, res, next) => {
