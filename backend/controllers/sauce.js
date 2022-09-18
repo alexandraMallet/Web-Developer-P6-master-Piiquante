@@ -27,7 +27,7 @@ exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({_id : req.params.id})
     .then((sauce) => res.status(200).json(sauce))
     .catch(error => res.status(404).json({error}));
-};
+}; 
 
 
 exports.modifySauce = (req, res, next) => {
@@ -45,9 +45,9 @@ exports.modifySauce = (req, res, next) => {
         if (req.file) {
             fs.unlink(`images/${sauce.imageUrl.split("/images/")[1]}`, () => {
                 Sauce.updateOne({_id : req.params.id}, {...sauceObject, _id:req.params.id})
-                .then(() => res.status(200).json({message : "Sauce modifiée"}))
+                .then(() => res.status(200).json({message : "sauce modifiée"}))
                 .catch(error => res.status(400).json({error}));
-            }
+            })
         } else {  
             Sauce.updateOne({_id : req.params.id}, {...sauceObject, _id:req.params.id})
             .then(() => res.status(200).json({message : "sauce modifiée"}))
@@ -59,7 +59,18 @@ exports.modifySauce = (req, res, next) => {
 
 
 exports.deleteSauce = (req, res, next) => {
-
+    Sauce.findOne({_id : req.params.id})
+    .then((sauce) => {
+        if (sauce.userId != req.auth.userId) {
+            return res.status(401).json({message : "Cette sauce n'est pas la vôtre."});
+        }
+        fs.unlink(`images/${sauce.imageUrl.split("/images/")[1]}`, () => {
+            Sauce.deleteOne({_id : req.params.id})
+            .then(() => res.status(200).json({message : "sauce supprimée"}))
+            .catch(error => res.status(400).json({error}));
+        })
+    })
+    .catch(error => res.status(500).json({error}));
 };
 
 
