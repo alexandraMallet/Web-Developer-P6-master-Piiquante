@@ -40,7 +40,7 @@ exports.modifySauce = (req, res, next) => {
     Sauce.findOne({_id : req.params.id})
     .then((sauce) => {
         if (sauce.userId != req.params.userId) {
-            return res.status(401).json({message : "Cette sauce n'est pas la vôtre."})
+            return res.status(403).json({message : "Cette sauce n'est pas la vôtre."})
         }
         if (req.file) {
             fs.unlink(`images/${sauce.imageUrl.split("/images/")[1]}`, () => {
@@ -62,7 +62,7 @@ exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({_id : req.params.id})
     .then((sauce) => {
         if (sauce.userId != req.auth.userId) {
-            return res.status(401).json({message : "Cette sauce n'est pas la vôtre."});
+            return res.status(403).json({message : "Cette sauce n'est pas la vôtre."});
         }
         fs.unlink(`images/${sauce.imageUrl.split("/images/")[1]}`, () => {
             Sauce.deleteOne({_id : req.params.id})
