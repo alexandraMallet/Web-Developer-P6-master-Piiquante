@@ -76,4 +76,25 @@ exports.deleteSauce = (req, res, next) => {
 
 exports.likeDislikeSauce = (req, res, next) => {
 
+    Sauce.findOne({_id : req.params.id})
+    .then()
+    .catch();
+
+
+
 };
+
+/*rappel modele Sauce : 
+usersLiked = tableau des identifiants des users qui ont liké la sauce
+usersDisliked = tableau des identifiants des users qui ont disliké la sauce
+*/
+
+
+
+/*
+Définit le statut "Like" pour l'userId fourni.
+like = 1 : user aime / like = -1 : user n'aime pas / like = 0 : user indifférent et annule like ou dislike
+l'ID du user doit être ajouté ou retiré du tableau approprié pour garder trace et éviter +ieus likes ou dislikes du même user sur la même sauce
+Nombre total like et dislike de la sauce est mis à jour à chaque nouvelle notation
+
+*/
