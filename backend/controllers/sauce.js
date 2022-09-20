@@ -98,7 +98,7 @@ exports.likeDislikeSauce = (req, res, next) => {
                         sauce.dislikes += 1;
                         sauce.usersDisliked.push(`${user}`);
                         sauce.save()
-                        .then(() => res.status(201).json({message : "dislike ajouté"}))
+                            .then(() => res.status(201).json({ message: "dislike ajouté" }))
                 }
                 return;
             }
@@ -108,11 +108,11 @@ exports.likeDislikeSauce = (req, res, next) => {
                         sauce.likes -= 1;
                         sauce.usersLiked = sauce.usersLiked.filter(e => e != `${user}`);
                         sauce.save()
-                        .then(() => res.status(200).json({message : "like supprimé"}))
-                        .catch(error => res.status(500).json({error}));
+                            .then(() => res.status(200).json({ message: "like supprimé" }))
+                            .catch(error => res.status(500).json({ error }));
                         break;
                     case 1:
-                        res.status(409).json({message : "like déjà existant"});
+                        res.status(409).json({ message: "like déjà existant" });
                         break;
                     case -1:
                         sauce.likes -= 1;
@@ -120,9 +120,10 @@ exports.likeDislikeSauce = (req, res, next) => {
                         sauce.usersLiked = sauce.usersLiked.filter(e => e != `${user}`);
                         sauce.usersDisliked.push(`${user}`);
                         sauce.save()
-                        .then(() => res.status(201).json({message : "like supprimé et dislike ajouté"}))
-                        .catch(error => res.status(500).json({error}));
+                            .then(() => res.status(201).json({ message: "like supprimé et dislike ajouté" }))
+                            .catch(error => res.status(500).json({ error }));
                 }
+                return;
             }
 
             if (userDisliked) {
@@ -131,20 +132,20 @@ exports.likeDislikeSauce = (req, res, next) => {
                         sauce.dislikes -= 1;
                         sauce.usersDisliked = sauce.usersDisliked.filter(e => e != `${user}`);
                         sauce.save()
-                        .then(()=> res.status(200).json({message : "dislike supprimé"}))
-                        .catch(error => res.status(500).json({error}));
+                            .then(() => res.status(200).json({ message: "dislike supprimé" }))
+                            .catch(error => res.status(500).json({ error }));
                         break;
-                    case 1: 
+                    case 1:
                         sauce.dislikes -= 1;
                         sauce.likes += 1;
                         sauce.usersDisliked = sauce.usersDisliked.filter(e => e != `${user}`);
                         sauce.usersLiked.push(`${user}`);
                         sauce.save()
-                        .then(() => res.status(201).json({message : "like supprimé et dislike ajouté"}))
-                        .catch(error => res.status(500).json({error}));
+                            .then(() => res.status(201).json({ message: "like supprimé et dislike ajouté" }))
+                            .catch(error => res.status(500).json({ error }));
                         break;
                     case -1:
-                        res.status(409).json({message : "dislike déjà existant"});
+                        res.status(409).json({ message: "dislike déjà existant" });
                 }
             }
         })
