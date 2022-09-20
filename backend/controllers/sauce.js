@@ -39,9 +39,9 @@ exports.modifySauce = (req, res, next) => {
     delete sauceObject._userId;
     Sauce.findOne({ _id: req.params.id })
         .then((sauce) => {
-            // if (sauce.userId != req.params.userId) {
-            //     return res.status(403).json({message : "Cette sauce n'est pas la vôtre."})
-            // }
+            if (sauce.userId != req.auth.userId) {
+                return res.status(403).json({message : "Cette sauce n'est pas la vôtre."})
+             }
             if (req.file) {
                 fs.unlink(`images/${sauce.imageUrl.split("/images/")[1]}`, () => {
                     Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
