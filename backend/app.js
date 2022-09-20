@@ -4,6 +4,7 @@ const userRoutes = require("./routes/user");
 const sauceRoutes = require("./routes/sauce");
 const dotenv = require("dotenv").config();
 const path = require("path");
+const helmet = require("helmet");
 
 //TODO : helmet
 //TODO :  rateLimit
@@ -11,6 +12,11 @@ const path = require("path");
 const app = express();
 
 app.use(express.json());
+app.use(
+    helmet({
+      contentSecurityPolicy: false,
+    })
+  );
 
 mongoose.connect(process.env.URL_DATABASE,
     {
