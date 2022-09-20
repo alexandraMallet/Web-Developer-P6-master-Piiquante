@@ -5,8 +5,7 @@ const sauceRoutes = require("./routes/sauce");
 const dotenv = require("dotenv").config();
 const path = require("path");
 const helmet = require("helmet");
-
-//TODO :  rateLimit
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 
@@ -19,13 +18,22 @@ app.use(
   })
 );
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+	max: 100, 
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use(limiter);
+
 mongoose.connect(process.env.URL_DATABASE,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
   .then(() => console.log("Application connectée à MongoDB."))
-  .catch(() => console.log("Impossible de se connecter à MongoDB."));
+  .catch(() => console.log("Impossible de se connecter à MongoDB.")); 
 
 
 
