@@ -99,6 +99,7 @@ exports.likeDislikeSauce = (req, res, next) => {
                         sauce.usersDisliked.push(`${user}`);
                         sauce.save()
                             .then(() => res.status(201).json({ message: "dislike ajouté" }))
+                            .catch(error => res.status(500).json({error}));
                 }
                 return;
             }
